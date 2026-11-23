@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar.jsx'
 import PostList from './routes/PostList.jsx'
 import PostDetail from './routes/PostDetail.jsx'
-import Login from './routes/login.jsx'
+import Login from './routes/Login.jsx'
 
 import { Routes, Route } from 'react-router'
 
