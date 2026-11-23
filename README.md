@@ -96,3 +96,18 @@ http://localhost:8000/docs 에 주소 목록이 보이면 됩니다. 새 터미�
 ```bash
 uv run pytest
 ```
+
+
+## Frontend
+
+### 1. 프로젝트 생성
+```
+npm create vite@latest frontend -- --template react --no-interactive
+```
+
+### 2. 라이브러리 설치
+```
+npm install
+npm install react-router
+npm install bootstrap bootstrap-icons
+```
