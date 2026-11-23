@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar.jsx'
 import PostList from './routes/PostList.jsx'
 import PostDetail from './routes/PostDetail.jsx'
+import Login from './routes/login.jsx'
 
 import { Routes, Route } from 'react-router'
 
@@ -14,6 +15,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<PostList />} />
                   <Route path="/posts/:id" element={ <PostDetail/>} />
+                  <Route path="/login" element={ <Login />} />
                 </Routes>
               </main>
             </div>
