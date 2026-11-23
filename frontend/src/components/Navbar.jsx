@@ -1,5 +1,11 @@
+import {Link} from 'react-router'
+
 function Navbar() { 
-    return <nav>네비게이션</nav>
+    return (
+    <nav className="navbar bg-white border-bottom sticky-top px-3">
+        <Link className="navbar-brand" to="/">insta</Link>
+    </nav>
+    )
 }
 
 export default Navbar
