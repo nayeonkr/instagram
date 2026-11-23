@@ -1,5 +1,13 @@
+import Navbar from './components/Navbar.jsx'
+import PostList from './routes/PostList.jsx'
+
 function App() {
-  return <h1> instagram </h1>
+  return (
+    <div className="container">
+      <Navbar />
+      <PostList />
+    </div>
+  )
 }
 
 export default App
