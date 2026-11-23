@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from '../api.js'
 import { useNavigate } from 'react-router'
+import { useAuth } from '../hooks/useAuth.jsx'
 
 function Login() {
     const [username, setUsername] = useState('')
@@ -8,16 +9,18 @@ function Login() {
     const [error, setError] =useState('')
 
     const navigate = useNavigate()
+    const { login } = useAuth
     
     async function handleSubmit(e) {
         e.preventDefault()
         
         // 로그인 처리 (fastapi에게 토큰 달라고 하기)
-        try {
-            const data = await api(`/api/auth/login`, {
-            method: 'POST', 
-            body: new URLSearchParams({username, password})
-            })
+        try {            
+            await login(username, password)
+            // const data = await api(`/api/auth/login`, {
+            // method: 'POST', 
+            // body: new URLSearchParams({username, password})
+            // })
 
             localStorage.setItem('access_token', data.access_token)
             navigate('/')
