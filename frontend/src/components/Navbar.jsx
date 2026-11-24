@@ -8,7 +8,7 @@ function Navbar() {
     <nav className="navbar bg-white border-bottom sticky-top px-3">
         <Link className="navbar-brand" to="/">insta</Link>
         { token ? 
-            <div>
+            <div className="d-flex align-items-center gap-2">
                 { user && <b>{ user.username }</b>}
                 <button className="btn btn-sm btn-outline-danger" onClick={logout}>Logout</button>
             </div>

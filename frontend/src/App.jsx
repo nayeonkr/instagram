@@ -2,6 +2,7 @@ import Navbar from './components/Navbar.jsx'
 import PostList from './routes/PostList.jsx'
 import PostDetail from './routes/PostDetail.jsx'
 import Login from './routes/Login.jsx'
+import RequireLogin from './components/RequireLogin.jsx'
 
 import { Routes, Route } from 'react-router'
 
@@ -13,8 +14,10 @@ function App() {
               <Navbar />
               <main className="py-4">
                 <Routes>
-                  <Route path="/" element={<PostList />} />
-                  <Route path="/posts/:id" element={ <PostDetail/>} />
+                  <Route element={<RequireLogin/>}>
+                    <Route path="/" element={<PostList />} />
+                    <Route path="/posts/:id" element={ <PostDetail/>} />
+                  </Route>
                   <Route path="/login" element={ <Login />} />
                 </Routes>
               </main>
