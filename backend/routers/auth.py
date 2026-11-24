@@ -74,3 +74,8 @@ def refresh(db: SessionDep, refresh_token: Annotated[str | None, Cookie()] = Non
 
   # access_token 발행
   return {'access_token': create_access_token(user.id), 'token_type': 'bearer'}
+
+@router.post('/logout')
+def logout(response: Response):
+  response.delete_cookie('refresh_token', path='/api/auth')
+  

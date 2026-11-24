@@ -11,7 +11,6 @@ function RequireLogin() {
 
     return <Outlet/>
     
-    
 }
 
 export default RequireLogin

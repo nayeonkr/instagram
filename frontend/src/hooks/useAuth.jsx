@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
                 logout()
             }
         }
-
+        load()
     }, [token])
 
     // 최초 한번 쿠키(refresh_token)로 access token 발행
@@ -51,9 +51,12 @@ export function AuthProvider({ children }) {
         setToken(data.access_token)
         // localStorage.setItem('access_token', data.access_token)
     }
-    function logout() {
+    function logout() { 
+        // 쿠키 삭제
+        api('/api/auth/logout', {method: 'POST', credentials: 'include'})
+        // access_token 삭제
         setToken(null) 
-        // 로그아웃을 한 경우 userstate도 비움
+        // 유저 정보 삭제, 로그아웃을 한 경우 userstate도 비움
         setUser(null)
         // localStorage.removeItem('access_token')
     }
@@ -66,3 +69,4 @@ export function AuthProvider({ children }) {
 export function useAuth() {
     return useContext(AuthContext)
 }
+
