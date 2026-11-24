@@ -111,3 +111,13 @@ npm install
 npm install react-router
 npm install bootstrap bootstrap-icons
 ```
+
+## React 컴포넌트 구조
+> https://insta-structure-sd4.vercel.app/
+
+<details>
+<summary>이전 이미지</summary>
+
+![alt text](assets/image.png)
+
+</details>

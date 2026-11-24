@@ -9,7 +9,7 @@ function Login() {
     const [error, setError] =useState('')
 
     const navigate = useNavigate()
-    const { login } = useAuth
+    const { login } = useAuth()
     
     async function handleSubmit(e) {
         e.preventDefault()
@@ -22,7 +22,7 @@ function Login() {
             // body: new URLSearchParams({username, password})
             // })
 
-            localStorage.setItem('access_token', data.access_token)
+            // localStorage.setItem('access_token', data.access_token)
             navigate('/')
 
         } catch (e) {
@@ -40,6 +40,7 @@ function Login() {
             <input className="form-control" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="비밀번호" required />
             <button className="btn btn-primary">로그인</button>
     </form>
+    { error && <p className="text-danger" >{error}</p> }
     </div>
     </>
   )
