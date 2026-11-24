@@ -24,8 +24,12 @@ export function AuthProvider({ children }) {
     async function login(username, password) {
         const data = await api('/api/auth/login', {
             method: 'POST',
-            body: new URLSearchParams({ username, password })
+            body: new URLSearchParams({ username, password }), 
+            credentials: 'include'
         })
+        console.log('=====')
+        console.log(data)
+
         setToken(data.access_token)
         localStorage.setItem('access_token', data.access_token)
     }
