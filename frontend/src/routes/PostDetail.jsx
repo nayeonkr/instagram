@@ -27,6 +27,10 @@ function PostDetail() {
         setComments([...comments, created])
     }
 
+    function handleDelete(commentId) {
+        setComments(comments.filter(c => c.id !== commentId))
+    }
+ 
     if (error) return <p className="text-danger">{ error }</p>
     if (!post) return <p> 불러오는 중...</p>
 
@@ -36,7 +40,7 @@ function PostDetail() {
         <h3>댓글</h3>
         <ul className="list-group">
             {comments.map(c => (
-                <CommentItem key={c.id} {...c} />
+                <CommentItem key={c.id} {...c} onDelete={handleDelete} />
             ))}
         </ul>
         <CommentForm postId={ post.id } onCreate={ handleCreate }/>
