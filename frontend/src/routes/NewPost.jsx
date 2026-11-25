@@ -7,12 +7,14 @@ function NewPost() {
     const [content, setContent] = useState('')
     const [file, setFile] = useState(null)
     const [error, setError] = useState('')
+    const [sending, setSending] = useState(false)
     const { authApi } = useAuth()
 
     const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault()
+        setSending(true)
         // 사용자의 입력값을 가지고 서버로 게시물 작성 요청
         try{
             // 사진이 있는 경우 => 사진을 먼저 업로드 하고 image_url 받아오기
@@ -34,6 +36,7 @@ function NewPost() {
             navigate('/')
         } catch (e) {
             setError(e.message)
+            setSending(false)
         }
     }
     return (
@@ -41,8 +44,13 @@ function NewPost() {
             <h2 className="h5 mb-3">새 게시물</h2>
             <form className="d-grid gap-2" onSubmit={handleSubmit}>
                 <input className="form-control" type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
+                {file && (
+                    <div className="ratio ratio-1x1">
+                        <img src={URL.createObjectURL(file)} className="object-fit-cover rounded" alt="선택한 이미지 미리보기" />
+                    </div>
+                )}
                 <textarea className="form-control" rows={3} value={content} onChange={e => setContent(e.target.value)} placeholder="문구 입력…" required />
-                <button className="btn btn-primary">공유하기</button>
+                <button className="btn btn-primary" disabled={sending}>{sending ? '보내는중...' : '공유하기'}</button>
             </form>
             {error && <p className="text-danger mt-3 mb-0">{error}</p>}
         </div>
