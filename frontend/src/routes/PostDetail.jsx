@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { api } from '../api.js'
 import PostCard from '../components/PostCard.jsx'
 import CommentItem from '../components/CommentItem.jsx'
+import CommentForm from '../components/CommentForm.jsx'
 
 function PostDetail() {
     const { id } = useParams()
@@ -22,6 +23,10 @@ function PostDetail() {
         load()
     }, [id]) 
 
+    function handleCreate(created) {
+        setComments([...comments, created])
+    }
+
     if (error) return <p className="text-danger">{ error }</p>
     if (!post) return <p> 불러오는 중...</p>
 
@@ -34,6 +39,7 @@ function PostDetail() {
                 <CommentItem key={c.id} {...c} />
             ))}
         </ul>
+        <CommentForm postId={ post.id } onCreate={ handleCreate }/>
         </>
     )
 
