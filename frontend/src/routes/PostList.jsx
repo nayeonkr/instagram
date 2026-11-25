@@ -23,6 +23,7 @@ function PostList() {
             return post
         })
         setPosts(newPosts)
+        // setPosts(posts.map(post => post.id === updated.id ? updated : post))
     }
 
   return (

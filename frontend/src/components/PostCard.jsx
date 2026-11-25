@@ -9,9 +9,9 @@ function PostCard({ id, content, created_at, image_url, user, likes , onUpdate})
   const liked =  auth.user && likes.some((like) => { return auth.user.id === like.user_id})
 
   async function handleLike() {
-    const updated = await api(`/api/posts/${id}/likes`,{
+    const updated = await auth.authApi(`/api/posts/${id}/likes`,{
       method: liked ? 'DELETE' : 'POST' ,
-      headers: {Authorization: `Bearer ${auth.token}`}
+      // headers: {Authorization: `Bearer ${auth.token}`}
     })
     // console.log(updated)
     onUpdate(updated)
