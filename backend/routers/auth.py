@@ -104,8 +104,9 @@ def refresh(db: SessionDep, refresh_token: Annotated[str | None, Cookie()] = Non
   return {'access_token': create_access_token(user.id), 'token_type': 'bearer'}
 
 @router.post('/logout')
-def logout(response: Response, refresh_token: Annotated[ str | None, Cookie()],
-           db: SessionDep
+def logout(response: Response,
+           db: SessionDep,
+           refresh_token: Annotated[ str | None, Cookie()] = None
            ):
   
   # DB에서도 토큰 삭제

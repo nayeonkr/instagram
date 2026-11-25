@@ -1,7 +1,14 @@
 import { SERVER_URL } from '../api.js'
 import { Link } from 'react-router'
+import { useAuth } from '../hooks/useAuth.jsx'
 
 function PostCard({ id, content, created_at, image_url, user, likes }) {
+
+  const auth = useAuth()
+  // some => 하나라도 만족하면 true 반환하고 더이상 반복 안함
+  const liked =  auth.user && likes.some((like) => { return auth.user.id === like.user_id})
+
+
     return (
     <article className="card mb-4">
       <div className="card-header bg-white d-flex align-items-center gap-2">
@@ -15,8 +22,10 @@ function PostCard({ id, content, created_at, image_url, user, likes }) {
       )}
       <div className="card-body">
         <div className="fs-4 mb-2">
-          <i className="bi bi-heart me-3"></i>
-          <Link className="text-reset" to={`/posts/${id}`}>
+          <button className="btn btn-link p-0 text-reset me-2 fs-4">
+          <i className={ liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart' }></i>
+          </button>
+          <Link className="btn btn-link p-0 text-reset fs-4" to={`/posts/${id}`}>
           <i className="bi bi-chat"></i>
           </Link>
         </div>
