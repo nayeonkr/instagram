@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
     // 로그인이 필요한 요청 => 401이면 새로운 토큰 발생받아서 한번더 요청
     async function authApi(path, options) {
         try {
-        return await api(path, { ...options, headers: {Authorization: `Bearer ${token}`} })
+        return await api(path, { ...options, headers: {...options.headers, Authorization: `Bearer ${token}`} })
         
         } catch (e) {
         if (e.status != 401) throw e
