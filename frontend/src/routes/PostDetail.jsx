@@ -27,7 +27,7 @@ function PostDetail() {
 
     return (
         <>
-        <PostCard {...post} />
+        <PostCard {...post} onUpdate={ setPost }/>
         <h3>댓글</h3>
         <ul className="list-group">
             {comments.map(c => (

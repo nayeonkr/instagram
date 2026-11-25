@@ -15,6 +15,16 @@ function PostList() {
         load()
     }, [])
 
+    function handleUpdate(updated) {
+        const newPosts = posts.map((post) => {
+            if (post.id == updated.id) {
+                return updated
+            }
+            return post
+        })
+        setPosts(newPosts)
+    }
+
   return (
     <>
     <h2>전체 게시물</h2>
@@ -35,7 +45,7 @@ function PostList() {
             // </article>
 
             // <PostCard key={post.id} content={post.content}... />
-            <PostCard key={post.id} {...post} />
+            <PostCard key={post.id} {...post} onUpdate={ handleUpdate } />
         ))}
     </div>
     </>
