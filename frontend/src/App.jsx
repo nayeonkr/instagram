@@ -19,7 +19,10 @@ function App() {
               <main className="py-4">
                 <Routes>
                   <Route element={<RequireLogin/>}>
-                    <Route path="/" element={<PostList />} />
+
+                    <Route path="/" element={<PostList path="/api/posts"/>} />
+                    <Route path="/feed" element={<PostList path="/api/posts/feed"/>} />
+
                     <Route path="/posts/:id" element={ <PostDetail/>} />
                     <Route path="/new" element={<NewPost />} />
                     <Route path="/users/:username" element={ <Profile />} />

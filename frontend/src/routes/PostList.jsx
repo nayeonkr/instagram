@@ -1,16 +1,19 @@
 import { api, SERVER_URL } from '../api.js'
 import { useState, useEffect } from 'react'
 import PostCard from '../components/PostCard.jsx'
+import { useAuth } from '../hooks/useAuth.jsx'
 
-function PostList() {
+function PostList({ path }) {
  
     // 게시물을 저장할 state 생성
     const [posts, setPosts] = useState([]) 
 
+    const { authApi } = useAuth()
+
     // 이 컴포넌트가 생성될 때 외부에서 데이터 가져오기
     useEffect(() => {
         async function load() {
-            setPosts(await api('/api/posts'))
+            setPosts(await authApi(path, {}))
         }
         load()
     }, [])
