@@ -12,9 +12,14 @@ def post_list(db: SessionDep):
 
   return posts
 
-@router.get('/feed')
+@router.get('/feed', response_model=list[PostOut])
 def feed(db: SessionDep, me: CurrentUserDep):
-  pass
+  ids = [me.id] 
+
+  for row in me.followings:
+    ids.append(row.to_user_id)
+
+  return db.scalars(select(Post).where(Post.user_id.in_(ids))).all()
 
 
 @router.get('/{post_id}', response_model=PostOut)
