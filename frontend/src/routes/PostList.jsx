@@ -7,16 +7,26 @@ function PostList({ path }) {
  
     // 게시물을 저장할 state 생성
     const [posts, setPosts] = useState([]) 
+    const [hasMore, setHasMore] = useState(true)
 
     const { authApi } = useAuth()
 
     // 이 컴포넌트가 생성될 때 외부에서 데이터 가져오기
     useEffect(() => {
         async function load() {
-            setPosts(await authApi(path, {}))
+            const first = await authApi(path, {})
+            setPosts(first)
+            setHasMore(first.length === 10)
         }
         load()
-    }, [])
+    }, [path])
+
+    async function loadMore() {
+        const next = await authApi(`${path}?skip=${posts.length}`, {})
+        setPosts([...posts, ...next])
+        setHasMore(next.length === 10)
+    }
+    
 
     function handleUpdate(updated) {
         const newPosts = posts.map((post) => {
@@ -52,6 +62,11 @@ function PostList({ path }) {
             <PostCard key={post.id} {...post} onUpdate={ handleUpdate } />
         ))}
     </div>
+    {hasMore && (
+        <div className="text-center">
+            <button class="btn btn-outline-secondary" onClick={loadMore}>더보기</button>
+        </div>
+    )}
     </>
   )
 }
