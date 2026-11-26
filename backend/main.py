@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import posts, auth, likes, comments, uploads, social
+from routers import posts, auth, likes, comments, uploads, social, users
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -23,5 +23,7 @@ app.include_router(likes.router)
 app.include_router(comments.router)
 app.include_router(uploads.router)
 app.include_router(social.router)
+app.include_router(users.router)
+
 
 app.mount('/media', StaticFiles(directory='media'))
