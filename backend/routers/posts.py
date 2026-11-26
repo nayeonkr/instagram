@@ -7,19 +7,29 @@ from schemas import PostOut, PostCreate, PostUpdate
 router = APIRouter(prefix='/api/posts', tags=['posts'])
 
 @router.get('', response_model=list[PostOut])
-def post_list(db: SessionDep):
-  posts = db.scalars(select(Post).order_by(Post.created_at.desc())).all()
+def post_list(db: SessionDep, skip: int = 0, limit: int = 10):
+  posts = db.scalars(
+    select(Post)
+    .order_by(Post.created_at.desc())
+    .offset(skip)
+    .limit(limit)
+  ).all()
 
   return posts
 
 @router.get('/feed', response_model=list[PostOut])
-def feed(db: SessionDep, me: CurrentUserDep):
+def feed(db: SessionDep, me: CurrentUserDep, skip: int = 0, limit: int = 10):
   ids = [me.id] 
 
   for row in me.followings:
     ids.append(row.to_user_id)
 
-  return db.scalars(select(Post).where(Post.user_id.in_(ids))).all()
+  return db.scalars(
+    select(Post)
+    .where(Post.user_id.in_(ids))
+    .offset(skip)
+    .limit(limit)
+  ).all()
 
 
 @router.get('/{post_id}', response_model=PostOut)
