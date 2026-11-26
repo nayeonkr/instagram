@@ -50,7 +50,7 @@ function Profile() {
             { auth.user && !isMe && (
                 <button className={followed ? 'btn btn-sm btn-outline-secondary' : 'btn btn-sm btn-outline-primary'} 
                 onClick={handleFollow}>
-                    {followed ? '팔로잉' : '팔로우'}
+                    {followed ? '팔로우취소' : '팔로우'}
                     </button>
             ) }
           </div>

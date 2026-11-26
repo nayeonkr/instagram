@@ -16,7 +16,7 @@ def get_user_or_404(username: str, db: SessionDep):
 UserDep = Annotated[User, Depends(get_user_or_404)]
 
 
-@router.get('/{username}', response_model=ProfileOut) #api/users/bob
+@router.get('/{username}', response_model=ProfileOut) # /api/users/bob
 def profile(user: UserDep):
     return user
 
@@ -28,7 +28,7 @@ def user_posts(user: UserDep, db: SessionDep):
 @router.post('/{username}/follow', response_model=ProfileOut)
 def follow(user: UserDep, db: SessionDep, me: CurrentUserDep):
     if user.id == me.id:
-        raise HTTPException(status_code=400, detail= '나를 팔로우할 수 없습니다.')
+        raise HTTPException(status_code=400, detail='나를 팔로우 할 수 없습니다.')
 
     if db.get(Follow, (me.id, user.id)):
         raise HTTPException(status_code=400, detail='이미 팔로우했습니다.')
@@ -38,7 +38,7 @@ def follow(user: UserDep, db: SessionDep, me: CurrentUserDep):
     return user
 
 
-@router.delete('/{username}/follow')
+@router.delete('/{username}/follow', response_model=ProfileOut)
 def unfollow(user: UserDep, db: SessionDep, me: CurrentUserDep):
     row = db.get(Follow, (me.id, user.id))
     if row is None:

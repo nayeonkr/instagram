@@ -12,6 +12,10 @@ def post_list(db: SessionDep):
 
   return posts
 
+@router.get('/feed')
+def feed(db: SessionDep, me: CurrentUserDep):
+  pass
+
 
 @router.get('/{post_id}', response_model=PostOut)
 def post_detail(post: PostDep):
