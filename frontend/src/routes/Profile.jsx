@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router'
 import { api, SERVER_URL } from '../api.js'
+import { useAuth } from '../hooks/useAuth.jsx'
 
 // /users/:username
 function Profile() {
@@ -8,6 +9,8 @@ function Profile() {
     const [profile, setProfile] = useState(null)
     const [posts, setPosts] = useState([])
     const [error, setError] = useState('')
+
+    const auth = useAuth()
 
     useEffect(() => {
         async function load() {
@@ -24,13 +27,34 @@ function Profile() {
     if (error) return <p>{error}</p>
     if (!profile) return <p>로딩중...</p>
 
+    const isMe = auth.user && auth.user.id == profile.id
+    const followed = auth.user && profile.followers.some((f) => { return f.from_user_id === auth.user.id })
+
+    async function handleFollow() {
+        const updated = await auth.authApi(`/api/users/${username}/follow`, {
+            method: followed ? 'DELETE' : 'POST'
+        })
+        // console.log(updated)
+        setProfile(updated)
+
+    }
+
 
     return (
         <>
       <div className="d-flex align-items-center gap-4 mb-4">
         <i className="bi bi-person-circle display-1"></i>
         <div>
-          <h2 className="h4">{profile.username}</h2>
+          <div className="d-flex align-items-center gap-3 mb-2">
+            <h2 className="h4">{profile.username}</h2>
+            { auth.user && !isMe && (
+                <button className={followed ? 'btn btn-sm btn-outline-secondary' : 'btn btn-sm btn-outline-primary'} 
+                onClick={handleFollow}>
+                    {followed ? '팔로잉' : '팔로우'}
+                    </button>
+            ) }
+          </div>
+
           <div className="d-flex gap-3">
             <span>게시물 <b>{posts.length}</b></span>
             <span>팔로워 <b>{profile.followers.length}</b></span>
